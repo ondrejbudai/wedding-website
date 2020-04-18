@@ -644,8 +644,7 @@
                     pre: gift.collected,
                     post: gift.collected + amount,
                 });
-            })
-            .catch(log);
+            });
     }
 
     function takeGift(giftId) {
@@ -664,8 +663,7 @@
                     pre: false,
                     post: true,
                 });
-            })
-            .catch(log);
+            });
     }
 
     function setGiftTableLoading(loading) {
