@@ -508,7 +508,7 @@
         <h5 class="modal-header">Opravdu nám chceš dát 6 skleniček na červené?</h5>
         <div class="donate">
             <div>Zadej kolik:</div>
-            <div><input type="number" class="input-donate"></div>
+            <div><input type="number" class="input-donate" min="1"></div>
             <div>Kč</div>
         </div>
         <p class="modal-text modal-donation-info">Žádnou platební bránu nemáme, prostě si to předáme osobně. :)</p>
@@ -705,17 +705,22 @@
             modalHeader.innerText = `Opravdu nám chceš přispět na ${gift.modal}?`;
             modalDonate.style.display = "flex";
             modalDonateInfo.style.display = "block";
+            modalDonateInput.max = gift.price - gift.collected;
             const sendFn = () => {
                 const amountInput = modalDonateInput.value;
                 modalDonateInput.value = "";
                 const amount = betterParseUint(amountInput)
                 if (isNaN(amount)) {
-                    alert("Zadejte číslo!")
+                    alert("Zadejte číslo!");
+                    return;
+                }
+                if (amount <= 0) {
+                    alert("To je málo.");
                     return;
                 }
                 const remainder = gift.price - gift.collected;
                 if (amount > remainder) {
-                    alert("To je moc!")
+                    alert("To je moc!");
                     return;
                 }
                 donateToGift(giftId, gift, amount);
