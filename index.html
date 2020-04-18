@@ -214,12 +214,8 @@
             height: 500px;
         }
 
-        .gift-table {
-            width: 100%;
-        }
-
         .gift-table td {
-            padding: 0 15px 20px;
+            padding: 0 30px 20px;
             vertical-align: baseline;
         }
 
@@ -228,12 +224,7 @@
         }
 
         .gift-table td:first-child {
-            width: 100%;
             padding-left: 0;
-        }
-
-        .gift-table td:not(:first-child) {
-            white-space: nowrap;
         }
 
         .gift-table td:last-child {
@@ -243,15 +234,13 @@
         .gift-table td:nth-child(2) {
             text-align: right;
             color: #6f6f6f;
-            font-size: 20px;
         }
 
-        .gift-table td:nth-child(3) a {
+        a {
             color: #31b5ff;
-            font-size: 20px;
         }
 
-        .gift-table td:nth-child(3) a:hover {
+        a:hover {
             text-decoration: none;
         }
 
@@ -605,21 +594,20 @@
 
     function addGiftToGiftTable(giftTable, gift, giftId) {
         const row = document.createElement("tr")
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 3; i++) {
             row.appendChild(document.createElement("td"))
         }
-
-        row.children[0].textContent = gift.name;
+        row.children[0].innerHTML = `<a href="${gift.link}" target="_blank">${gift.name}</a>`;
         if (gift.taken === undefined) {
             row.children[1].textContent = `${formatPrice(gift.collected)} / ${formatPrice(gift.price)} Kč`;
         } else {
             row.children[1].textContent = formatPrice(gift.price) + ' Kč';
         }
-        row.children[2].innerHTML = `<a href="${gift.link}">${gift.linkText}</a>`;
+
         if (gift.taken) {
-            row.children[3].textContent = 'Už rezervované';
+            row.children[2].textContent = 'Už rezervované';
         } else if (gift.taken === undefined && gift.collected === gift.price) {
-            row.children[3].textContent = 'Už vybrané';
+            row.children[2].textContent = 'Už vybrané';
         } else {
             const button = document.createElement("button");
             button.onclick = () => {
@@ -632,7 +620,7 @@
                 button.innerText = "To Vám chci dát!";
             }
 
-            row.children[3].appendChild(button);
+            row.children[2].appendChild(button);
         }
 
 
