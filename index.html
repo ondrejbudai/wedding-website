@@ -580,6 +580,27 @@
     const giftTable = document.getElementById("gift-table").children[0];
     const giftTableLoading = document.getElementById("gift-table-loading");
 
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
     function formatPrice(price) {
         const thousands = Math.floor(price / 1000);
 
@@ -593,6 +614,7 @@
     }
 
     function addGiftToGiftTable(giftTable, gift, giftId) {
+        const localGifts = getLocalGiftsFromCookies();
         const row = document.createElement("tr")
         for (let i = 0; i < 3; i++) {
             row.appendChild(document.createElement("td"))
@@ -605,7 +627,12 @@
         }
 
         if (gift.taken) {
-            row.children[2].textContent = 'Už rezervované';
+            if(localGifts.includes(giftId)) {
+                row.children[2].textContent = '✓ Toto sis vybral(a)';
+            } else {
+                row.children[2].textContent = 'Už rezervované';
+            }
+
         } else if (gift.taken === undefined && gift.collected === gift.price) {
             row.children[2].textContent = 'Už vybrané';
         } else {
@@ -648,6 +675,14 @@
             });
     }
 
+    function getLocalGiftsFromCookies() {
+        const localGiftsStr = getCookie("localGifts");
+        if (localGiftsStr === null) {
+            return [];
+        }
+        return localGiftsStr.split(",");
+    }
+
     function takeGift(giftId) {
         hideModal();
         setGiftTableLoading(true);
@@ -656,6 +691,13 @@
         giftRef.set({
             taken: true
         }, {merge: true})
+            .then(() => {
+                let localGifts = getLocalGiftsFromCookies();
+
+                localGifts.push(giftId);
+                const newLocalGiftsStr = localGifts.join(",");
+                setCookie("localGifts", newLocalGiftsStr, 1000);
+            })
             .then(load)
             .then(() => setGiftTableLoading(false))
             .then(() => {
