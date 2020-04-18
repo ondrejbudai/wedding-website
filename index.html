@@ -636,7 +636,16 @@
             collected: gift.collected + amount
         }, {merge: true})
             .then(load)
-            .then(() => setGiftTableLoading(false));
+            .then(() => setGiftTableLoading(false))
+            .then(() => {
+                return log({
+                    type: "donateToGift",
+                    amount: amount,
+                    pre: gift.collected,
+                    post: gift.collected + amount,
+                });
+            })
+            .catch(log);
     }
 
     function takeGift(giftId) {
@@ -648,7 +657,15 @@
             taken: true
         }, {merge: true})
             .then(load)
-            .then(() => setGiftTableLoading(false));
+            .then(() => setGiftTableLoading(false))
+            .then(() => {
+                return log({
+                    type: "takeGift",
+                    pre: false,
+                    post: true,
+                });
+            })
+            .catch(log);
     }
 
     function setGiftTableLoading(loading) {
@@ -679,6 +696,17 @@
             setGiftTableLoading(false);
         });
     };
+
+    document.body.onkeydown = (e) => {
+        if (e.key === "Escape") {
+            hideModal();
+        }
+    }
+
+    function log(data) {
+        const date = new Date().toISOString();
+        return db.collection("logs").doc(date).set(data)
+    }
 
     const modal = document.getElementById("modal");
     const modalHeader = modal.getElementsByClassName("modal-header")[0];
