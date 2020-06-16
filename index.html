@@ -41,13 +41,13 @@
         }
 
         section.important {
-            width: 600px;
         }
 
-        section.important p {
+        article.important > p, section.important > p {
             text-align: center;
             font-size: 36px;
             color: #505050;
+            width: 600px;
         }
 
         section.important p.less-important {
@@ -210,6 +210,10 @@
 
         .map {
             width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .map-dynamic {
             height: 500px;
         }
 
@@ -359,6 +363,10 @@
             -webkit-appearance: none;
             margin: 0;
         }
+
+        .text-align-center {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -379,8 +387,9 @@
 <section>
     <h3>Novinky</h3>
     <p>
-        Přidali jsme program na odpoledne a už brzy přidáme podrobnější informace o parkování na místě obřadu a u
-        penzionu.
+        Přidali jsme k obřadu i k veselce mapku s parkováním. K občerstvení jsme přidali informace o pití. Ve zkratce:
+        nealko, pivo a víno bude volně, tvrdý alkohol za peníze na baru. A dobrá zpráva pro všechny přespávající: Máme
+        dostatek pokojů pro všechny, spacáky tedy netřeba.
     </p>
 </section>
 
@@ -423,7 +432,17 @@
         V případě nepřízně počasí proběhne obřad v kostele.
     </p>
     <article>
-        <div id="map-obrad" class="map"></div>
+        <h4>Mapa a souřadnice</h4>
+        <div id="map-obrad" class="map map-dynamic"></div>
+        <p class="text-align-center">50.7943283N, 15.0775258E</p>
+    </article>
+    <article>
+        <h4>Parkování</h4>
+        <a href="parking-map-obrad.jpg"><img src="parking-map-obrad.jpg" class="map"></a>
+        <p>
+            Místa přímo na louce jsou vyhrazena rodině (brána bude otevřená). Ostatní mohou parkovat na točně (prosím,
+            zachovejte její průjezdnost) nebo v Krakonošově ulici (na místě budeme mít našeho parkovacího koordinátora).
+        </p>
     </article>
 </section>
 <section>
@@ -433,16 +452,25 @@
     </p>
 
     <article>
-        <div id="map-veselka" class="map"></div>
+        <h4>Mapa a souřadnice</h4>
+        <div id="map-veselka" class="map map-dynamic"></div>
+        <p class="text-align-center">Josefův Důl 951<br>50.7847092N, 15.2425031E</p>
+    </article>
+
+    <article>
+        <h4>Parkování</h4>
+        <a href="parking-map-veselka.jpg"><img src="parking-map-veselka.jpg" class="map"></a>
+        <p>
+            Lidi, kteří zůstávají do neděle, prosíme, aby parkovali v lese, neboť u penzionu není dostatek místa.
+            Ostatní mohou parkovat před penzionem, případně u rybníčku.
+        </p>
     </article>
 
     <article>
         <h4>Ubytování</h4>
         <p>
-            V penzionu je k dispozici velké množství pokojů různých dispozic. Napište nám, kolik Vás bude, a my pro
-            Vás určitě nalezneme místo na spaní. Množství pokojů je velké, leč omezené, proto se, prosím, nezlobte,
-            pokud
-            Vás poprosíme o to, abyste si vzali spacák. Neboť jste našimi hosty, ubytování hradíme my.
+            Podařilo se nám všechny, kteří měli zájem o ubytování, poskládat do pokojů a není třeba, abyste si proto
+            vozili spacáky.
         </p>
     </article>
 
@@ -451,8 +479,11 @@
         <p>
             Rozhodli jsme se, že nechceme odpoledne zbytečně komplikovat, proto na naší svatbě rodinný oběd nečekejte.
             Místo toho bude pro všechny v průběhu odpoledne k dispozici raut, při kterém si každý přijde na své. Pokud
-            máte
-            nějaké dietní požadavky, dejte nám vědět, ať Vám můžeme co nejlépe vyhovět.
+            máte nějaké dietní požadavky, dejte nám vědět, ať Vám můžeme co nejlépe vyhovět.
+        </p>
+        <p>
+            Celé odpoledne a večer bude volně k dispozici nealko, pivo a víno. Pokud Vás zrovna nepozveme na jednu rundu,
+            pak bude tvrdý alkohol na baru za úplatu.
         </p>
         <p>
             V neděli ráno pak na Vás bude čekat snídaně.
@@ -498,9 +529,9 @@
 
     </article>
 </section>
-<section class="important">
+<section>
     <h3>Kontakty</h3>
-    <article class="wip">
+    <article class="important">
         <h4>Nevěsta</h4>
         <p class="less-margin">
             majkauhlirova@email.cz
@@ -509,7 +540,7 @@
             739 769 263
         </p>
     </article>
-    <article class="wip">
+    <article class="important">
         <h4>Ženich</h4>
         <p class="less-margin">
             ondrej@budai.cz
